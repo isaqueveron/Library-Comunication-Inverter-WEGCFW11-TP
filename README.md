@@ -1,8 +1,5 @@
 # Biblioteca de Comunicação para Inversores de Frequência (`LCINVfunctions`)
 
-[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/)
-[![MIT License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
-
 -----
 
 ## Visão Geral
