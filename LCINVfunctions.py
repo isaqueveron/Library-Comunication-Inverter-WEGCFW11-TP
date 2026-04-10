@@ -20,7 +20,7 @@ COD_WRITE   = 0x3D
 
 class Inverter:
 
-    def __init__(self, Port: str, ADR=1, Baudrate=9600, Timeout=0.05):
+    def __init__(self, Port: str, ADR=1, Baudrate=9600, Timeout=0.0):
         """
         Inicializa o objeto do inversor
 
@@ -96,9 +96,15 @@ class Inverter:
             self.isReceiving = False
         return success
 
-    def SendReferenceAngularVelocity(referencia_rpm):
+    def SendReferenceAngularVelocity(self, referencia_rpm):
         bit = int((referencia_rpm*8192)/1800)
-        return Inverter.WriteParameter(683,bit)
+        return Inverter.WriteParameter(self,683,bit)
+    
+    def ActivateMotor(self):
+        return Inverter.WriteParameter(self,682,23)
+    
+    def StopMotor(self):
+        return Inverter.WriteParameter(self,682,22)
         
 
 class Methods:
