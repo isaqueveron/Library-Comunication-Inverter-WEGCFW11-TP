@@ -1,5 +1,9 @@
 # Biblioteca de Comunicação para Inversores de Frequência (`LCINVfunctions`)
 
+[](https://www.python.org/)
+[](https://opensource.org/licenses/MIT)
+[](https://www.google.com/search?q=https://github.com/isaque-verona/LCTSfunctions/commits/main)
+
 -----
 
 ## Visão Geral
