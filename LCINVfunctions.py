@@ -1,13 +1,41 @@
 """
+=======================================
+Inverter Communication Library (:mod:`LCINVfunctions`)
+=======================================
+__author      : Isaque Verona
+__v0_date     : 12/04/2026
+__last_update : 12/04/2026
+__version     : v.2.0
+
+High-Level Flowchart (:mod:`Inverter Communication Process`):
+--------------------------------------------------------
+
+    1.  A --> B{Initialize Inverter};
+    2.  B --> C{Call an Inverter method (e.g., ReadParameter)};
+    3.  C --> D[Build Telegram (BytearrayCommands)];
+    4.  D --> E[Send Telegram (Methods.SendTelegram)];
+    5.  E --> F{Set isReceiving to True};
+    6.  F --> G{Loop for tries};
+    7.  G --> H{Read from Serial Port (Methods.ReadFrom)};
+    8.  H -- Data Received --> I{Check Integrity (Methods.CheckBCC)};
+    9.  I -- Success --> J{Process Response (Methods.ReceiveReadResponse)};
+    10. J --> K{Update Inverter attributes (last_value)};
+    11. K --> L{Set isReceiving to False};
+    12. L --> M[Return Value];
+    13. I -- Failure --> N{Set isReceiving to False};
+    14. N --> O[Return None/False];
+    15. H -- No Data --> N;
+    16. M --> P[End];
+
 Telegram format:
 ---------------
-    ♦ STX 
-    ♦ ADR 
-    ♦ COD (Leitura -> 3Ch) ou Escrita -> 3Dh)
-    ♦ NUM (Numero de parametros lidos ou escritos) = 1 para essa biblioteca
-    ♦ DMR ou DMW (Parametro lido ou escrito,
-    ♦ ETX
-    ♦ BCC
+    ♦ STX (0x02)
+    ♦ ADR (Inverter Address + 64)
+    ♦ COD (Read -> 3Ch | Write -> 3Dh)
+    ♦ NUM (Number of parameters - fixed at 0x01)
+    ♦ DMR or DMW (Data parameter or value)
+    ♦ ETX (0x03)
+    ♦ BCC (XOR Checksum)
 """
 
 import serial
@@ -20,7 +48,7 @@ COD_WRITE   = 0x3D
 
 class Inverter:
 
-    def __init__(self, Port: str, ADR=1, Baudrate=9600, Timeout=0.0):
+    def __init__(self, Port: str, ADR=1, Baudrate=57600, Timeout=0.0):
         """
         Inicializa o objeto do inversor
 
@@ -190,4 +218,3 @@ class BytearrayCommands:
         bcc = Methods.CalcBCC(body)
         telegram = bytearray(body + [bcc])
         return telegram
-    
