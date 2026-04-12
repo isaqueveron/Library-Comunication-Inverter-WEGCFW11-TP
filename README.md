@@ -15,12 +15,10 @@ No âmbito do projeto de pesquisa "BANCADA DE EMULAÇÃO DE TURBINA EÓLICA INTE
 Esta biblioteca viabiliza a **atuação em tempo real**, permitindo que o sistema de controle ajuste a dinâmica do motor para reproduzir fielmente o comportamento de uma turbina real sob diversas condições de vento. A confiabilidade e agilidade no envio de telegramas são fundamentais para a validação de algoritmos avançados de controle em ambiente de laboratório.
 
 #### Configuração do Protocolo do Inversor
-* **STX**: 0x02 (Início de texto).
-* **ADR**: Endereço do inversor (P0308 + 64).
-* **COD**: Leitura (0x3C) ou Escrita (0x3D).
-* **NUM**: Quantidade de parâmetros lidos/escritos (Padrão: 1).
-* **BCC**: Checksum Longitudinal calculado via OU EXCLUSIVO (XOR).
-
+* 8 bits de dados
+* 1 bit de parada
+* sem paridade 
+* 57600 de baudrate 
 -----
 
 ## Fluxograma de Alto Nível do Processo de Comunicação
